@@ -123,7 +123,6 @@ def calculate_countdown():
     # 1. Check if Christmas is here
     if time_difference.total_seconds() <= 0:
         display("🎅 MERRY CHRISTMAS! 🎄", target="countdown")
-        # We could add js.clearInterval here if we wanted to stop the loop
         return 
 
     # 2. Calculate Days, Hours, Minutes, Seconds
