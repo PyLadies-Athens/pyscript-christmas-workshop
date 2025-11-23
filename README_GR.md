@@ -94,7 +94,7 @@
 Διάγραψε ό,τι υπάρχει και επικόλλησε βήμα-βήμα τον παρακάτω κώδικα:
 
 #### A. Add the imports
-Θα φορτώσουμε τα βασικά για να τρέχει Python στον browser. Θα προσθέσουμε και το «fix» με `create_proxy` για σταθερά timers.
+Θα φορτώσουμε τα βασικά για να τρέχει η Python στον browser. 
 
 ```python
 from datetime import datetime
