@@ -92,10 +92,6 @@ Now open the main.py tab.
 
 Delete anything that’s there, and paste this code block by block:
 
-#### A. Imports and Setup
-
-We need to include the PyScript core files to make Python run in the browser. We should also include the Configuration Fix to hide the Python terminal from the webpage.
-
 #### A. Add the imports
 Start by setting up the necessary imports. The create_proxy function is the crucial fix for ensuring stable, non-blocking timers in PyScript.
 
