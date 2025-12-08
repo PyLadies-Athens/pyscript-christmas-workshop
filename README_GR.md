@@ -1,6 +1,6 @@
 # 🎄 PyLadies Athens PyScript Χριστουγεννιάτικο Workshop
 
-Σε αυτό το γιορτινό, πρακτικό workshop θα μάθεις να φτιάχνεις ένα δυναμικό, animated Christmas Countdown απευθείας στον browser σου, χρησιμοποιώντας Python και PyScript.
+Σε αυτό το γιορτινό workshop θα μάθεις να φτιάχνεις ένα κινούμενο Christmas Countdown απευθείας στον browser σου, χρησιμοποιώντας Python και PyScript.
 
 ## Στόχος
 Μέχρι το τέλος του workshop θα μπορείς να:
