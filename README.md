@@ -5,15 +5,13 @@ In this festive hands-on session, you'll learn how to build a dynamic, animated 
 ## Goals
 By the end of the workshop, you will:
 1. ✅ Use **Python logic** to calculate the time remaining until Christmas.
-2. ✅ Implement a **stable 1-second timer** using `create_proxy` to avoid timing issues in PyScript.
-3. ✅ Create **front-end animations** like falling snowflakes using Python and CSS.
-4. ✅ Understand how Python can interact with the DOM and bring your web pages to life!
+2. ✅ Create **front-end animations** like falling snowflakes using Python and CSS.
+3. ✅ Understand how Python can interact with the DOM and bring your web pages to life!
 
 ## Before You Begin
 This is a hands-on session. Make sure you're ready with:
 - 💻 A laptop (Chrome or Firefox browser recommended).
-- 📶 Internet access (PyScript loads from CDN).
-- Optional: pair up with someone near you!
+- 📶 Internet access.
 
 We’ll build everything step-by-step. No prior web dev experience needed!
 
