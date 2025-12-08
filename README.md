@@ -110,7 +110,7 @@ All you need to do is to open it and add this inside the `<body>` tag, just abov
 </div>
 
 <footer>
-    <p>A gift from <a href="https://pyladies.com/athens-greece-local/" target="_blank">PyLadies Athens</a></p>
+    <p>A gift from <a href="https://linktr.ee/pyladiesathens" target="_blank">PyLadies Athens</a></p>
 </footer>
 <div id="snow-layer"></div>
 ```
