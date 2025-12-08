@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Christmas Countdown - PyLadies Athens</title>
+
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.11.1/core.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2025.11.1/core.js"></script>
+    
+    <style>
+        body {
+            background: radial-gradient(ellipse at center, #1a2a6c 0%, #000033 70%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        .container {
+            text-align: center;
+            background: #020634;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .timer-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .timer-value {
+            font-size: 3em;
+            font-weight: 700;
+        }
+
+        .timer-label {
+            font-size: 1em;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        footer {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        @keyframes fall {
+            from {
+                top: -10%; 
+                opacity: 1;
+            }
+            to {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .snowflake {
+            position: absolute;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        #snow-layer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: white;
+            box-shadow: 0 0 20px 10px white;
+            filter: blur(3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Days 'til Christmas</h1>
+        <div id="countdown">
+            <div class="timer-box">
+                <div id="days" class="timer-value">0</div>
+                <div class="timer-label">Days</div>
+            </div>
+            <div class="timer-box">
+                <div id="hours" class="timer-value">0</div>
+                <div class="timer-label">Hours</div>
+            </div>
+            <div class="timer-box">
+                <div id="minutes" class="timer-value">0</div>
+                <div class="timer-label">Minutes</div>
+            </div>
+            <div class="timer-box">
+                <div id="seconds" class="timer-value">0</div>
+                <div class="timer-label">Seconds</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>A gift from <a href="https://pyladies.com/athens-greece-local/" target="_blank">PyLadies Athens</a></p>
+    </footer>
+
+    <script type="py" src="./main.py"></script>
+    <div id="snow-layer"></div>
+</body>
+</html>
