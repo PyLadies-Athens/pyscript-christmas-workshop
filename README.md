@@ -1,5 +1,13 @@
 # 🎄 PyLadies Athens PyScript Christmas Workshop
 
+## ✨ Final Result
+
+You can see the final result of this workshop in the `demo` directory. You can also see a [Live Demo](https://vadal.pyscriptapps.com/pyladies-athens-christmas-workshop-demo/latest/).
+
+![Christmas Countdown Website](demo/demo.png)
+
+---
+
 In this festive hands-on session, you'll learn how to build a dynamic, animated Christmas Countdown entirely in your web browser using Python and PyScript.
 
 ## Goals
@@ -79,13 +87,49 @@ Your HTML file is already populated with the necessary tags and PyScript setup.
 All you need to do is to open it and add this inside the `<body>` tag, just above the `<script type="py">` line:
 
 ```html
-<h1>🎄 Days 'til Christmas</h1>
-<div id="countdown">Loading countdown...</div>
+<div class="container">
+    <h1>🎄 Days 'til Christmas</h1>
+    <div id="countdown">
+        <div class="timer-box">
+            <div id="days" class="timer-value">0</div>
+            <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-box">
+            <div id="hours" class="timer-value">0</div>
+            <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-box">
+            <div id="minutes" class="timer-value">0</div>
+            <div class="timer-label">Minutes</div>
+        </div>
+        <div class="timer-box">
+            <div id="seconds" class="timer-value">0</div>
+            <div class="timer-label">Seconds</div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>A gift from <a href="https://linktr.ee/pyladiesathens" target="_blank">PyLadies Athens</a></p>
+</footer>
+<div id="snow-layer"></div>
 ```
 
-This creates the heading and the placeholder where we’ll show the countdown.
+This creates the main container for our countdown, the countdown display itself with boxes for days, hours, minutes and seconds, a footer and a layer for the snow.
 
-Then hit **▶ Run**. You won’t see the countdown working yet, but the page layout is ready.
+#### Add a Festive Font
+To make our countdown more festive, we'll use a special font from Google Fonts called "Mountains of Christmas". Add the following lines inside the `<head>` tag of your `index.html` file:
+
+```html
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+```
+
+---
+
+Then hit **Save** and **▶ Run**. You won’t see the countdown working yet, but the page layout is ready.
 
 ### Part 2: Python Logic (main.py)
 Now open the main.py tab.
@@ -105,21 +149,23 @@ import random
 #### B. Add the Christmas date
 ```python
 CHRISTMAS = datetime(2025, 12, 25, 0, 0, 0)
+countdown_interval = None
 ```
 
 #### C. Add the countdown logic
 Next, define the function that runs every second. It calculates the time difference and uses integer division (//) and modulo (%) to break it down into days, hours, minutes, and seconds.
 ```python
 def calculate_countdown():
+    global countdown_interval
     now = datetime.now()
     time_difference = CHRISTMAS - now
    
-    # 1. Check if Christmas is here
     if time_difference.total_seconds() <= 0:
-        display("🎅 MERRY CHRISTMAS! 🎄", target="countdown")
+        js.clearInterval(countdown_interval)
+        container = js.document.querySelector('.container')
+        container.innerHTML = "<h1>🎅 MERRY CHRISTMAS! 🎄</h1>"
         return 
 
-    # 2. Calculate Days, Hours, Minutes, Seconds
     days = time_difference.days
     seconds_remainder = time_difference.seconds
     
@@ -129,32 +175,43 @@ def calculate_countdown():
     minutes = seconds_after_hours // 60
     seconds = seconds_after_hours % 60
     
-    # 3. Format and Display (using :02 to ensure two digits, like 05)
-    countdown_text = f"{days} days, {hours:02}h, {minutes:02}m, {seconds:02}s"
-    js.document.getElementById('countdown').innerHTML = countdown_text
+    js.document.getElementById('days').innerHTML = str(days)
+    js.document.getElementById('hours').innerHTML = f"{hours:02}"
+    js.document.getElementById('minutes').innerHTML = f"{minutes:02}"
+    js.document.getElementById('seconds').innerHTML = f"{seconds:02}"
 ```
 #### D. Add the snowflake animation logic
-This function generates a new snowflake element, assigns it random properties (position, size, speed), and injects it into the body of the HTML page.
+This function generates a new snowflake element, assigns it random properties (position, size, speed, opacity), and injects it into the body of the HTML page. We'll also define a list of snowflake icons to use.
 
 ```python
+# A list of more elegant snowflake designs
+SNOWFLAKE_SVGS = [
+    "&#10052;",  # ❄
+    "&#10053;",  # ❅
+    "&#10054;",  # ❆
+]
+
 def create_snowflake():
     # 1. Randomness for position, size, and speed
     start_left = random.randint(1, 99) # Random position (1 to 99)
-    duration = random.randint(6, 15)   # Random speed in seconds (6 to 15)
+    duration = random.randint(8, 20)   # Random speed in seconds (8 to 20)
+    initial_opacity = random.uniform(0.5, 1) # Random initial opacity
 
     # 2. Create Element and Apply Styles
     snowflake = js.document.createElement("span")
     snowflake.className = "snowflake" # Applies base styles from <style>
-    snowflake.innerHTML = "❄️"
+    snowflake.innerHTML = random.choice(SNOWFLAKE_SVGS)
 
     # 3. Apply random CSS properties
     snowflake.style.left = f"{start_left}%"
-    snowflake.style.fontSize = f"{random.randint(10, 24)}px" 
+    snowflake.style.opacity = initial_opacity
+    snowflake.style.fontSize = f"{random.randint(15, 25)}px"
 
-    # 3. Set the 'fall' animation with random speed, linking to our CSS @keyframes
+
+    # 4. Set the 'fall' animation with random speed, linking to our CSS @keyframes
     snowflake.style.animation = f"fall {duration}s linear infinite" 
 
-    # 4. Inject into the body
+    # 5. Inject into the body
     js.document.body.appendChild(snowflake)
 ```
 
@@ -169,7 +226,7 @@ proxy_countdown = create_proxy(calculate_countdown)
 calculate_countdown()
 
 # 3. Use the stable proxy with the native JS timer
-js.setInterval(proxy_countdown, 1000)
+countdown_interval = js.setInterval(proxy_countdown, 1000)
 
 # 4. Start Snorflall Timer
 proxy_snowflake = create_proxy(create_snowflake)
@@ -179,48 +236,102 @@ js.setInterval(proxy_snowflake, 300)
 Now hit **▶ Run**. You should see the countdown updating every second and ❄️appearing, but it will look pretty plain.
 
 ### Part 3: Make It Pretty with CSS
-Let’s add the styling! Go back to index.html, and inside the <head> tag, just before </head>, add:
+Let’s add the styling! Go back to index.html, and inside the `<head>` tag, just before `</head>`, add:
 ```html
 <style>
     body {
-        background: #000033; /* Dark blue background */
+        background: radial-gradient(ellipse at center, #1a2a6c 0%, #000033 70%);
         color: white;
         min-height: 100vh;
-        overflow: hidden; /* Hide the scrollbar caused by falling elements */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Mountains of Christmas', cursive;
+    }
+
+    .container {
+        text-align: center;
+        background: #020634;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        position: relative;
+        z-index: 1;
     }
     
+    h1 {
+        font-size: 4em;
+        font-weight: 700;
+        margin-bottom: 0.5em;
+    }
+
     #countdown {
-        font-size: 2em; 
-        font-weight: bold; 
-        margin: 20px;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .timer-box {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+        border-radius: 10px;
+        min-width: 100px;
+    }
+
+    .timer-value {
+        font-size: 3em;
+        font-weight: 700;
+    }
+
+    .timer-label {
+        font-size: 1em;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.7);
     }
     
-    /* Define the 'fall' animation */
+    footer {
+        position: absolute;
+        bottom: 30px;
+        font-size: 0.8em;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    footer a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+    }
+
     @keyframes fall {
-        /* Start the snowflake slightly above the viewport */
         from {
             top: -10%; 
             opacity: 1;
         }
-        
-        /* End the snowflake below the viewport and fade it out */
         to {
             top: 100%;
-            opacity: 0; /* Fade out as it hits the bottom */
+            opacity: 0;
         }
     }
 
-    /* 2. Style for the snowflake element */
     .snowflake {
         position: absolute;
-        z-index: 1000;      /* Ensure they float above other content */
-        
-        /* Initially hide it, as Python will apply the animation property */
-        animation-name: none; 
+        z-index: -1;
+        filter: blur(1px);
+    }
+
+    #snow-layer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: white;
+        box-shadow: 0 0 20px 10px white;
+        filter: blur(3px);
     }
 </style>
 ```
-Now hit **▶ Run** again. Your app will look polished and wintry ❄️.
+Now hit **Save** and **▶ Run** again. Your app will look polished and wintry ❄️.
 
 ---
 
